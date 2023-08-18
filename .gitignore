@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
-
+App.js
+practice/
 # Compiled Object files
 *.slo
 *.lo

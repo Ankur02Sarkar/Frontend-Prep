@@ -1,32 +1,25 @@
-// The backend driven implementation doesn't fetch all the data
-// instead it fetches 10 data one by one thus is faster
-
 import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
 
   const pageHandler = (selectedPage) => {
     setPage(selectedPage);
   };
 
   const fetchProducts = async () => {
-    const res = await fetch(
-      `https://dummyjson.com/products?limit=10&skip=${page * 10 - 10}`
-    );
+    const res = await fetch("https://dummyjson.com/products?limit=100");
     const data = await res.json();
     if (data && data.products) {
       setProducts(data.products);
-      setTotalPages(data.total / 10);
     }
   };
-
+  console.log(products);
   useEffect(() => {
     fetchProducts();
-  }, [page]);
+  }, []);
   return (
     <>
       {products.length > 0 && (
@@ -38,7 +31,7 @@ function App() {
             gap: "30px",
           }}
         >
-          {products.map((product) => {
+          {products.slice(page * 10 - 10, page * 10).map((product) => {
             return (
               <span
                 key={product.id}
@@ -72,7 +65,7 @@ function App() {
           >
             ⬅️
           </span>
-          {[...Array(totalPages)].map((_, idx) => {
+          {[...Array(products.length / 10)].map((_, idx) => {
             return (
               <span
                 key={idx}
@@ -91,7 +84,7 @@ function App() {
           <span
             style={{
               cursor: "pointer",
-              display: page < totalPages ? "block" : "none",
+              display: page < products.length / 10 ? "block" : "none",
             }}
             onClick={() => pageHandler(page + 1)}
           >
