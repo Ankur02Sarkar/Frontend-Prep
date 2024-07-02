@@ -1,6 +1,0 @@
-Things to keep in Mind in a Frontend Machine Coding Interview/Assessment :-
-- Create Components wherever Possible
-- Create Custom Hooks if Possible
-- use proper namingConventions and css__Conventions
-- SEO Optimized code is good
-- Always add key to mapped JSX Elements
